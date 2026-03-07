@@ -1,1 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>John Bielski Memorial</title>
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --card: rgba(255,255,255,0.88);
+      --card-solid: #ffffff;
+      --text: #2f2a25;
+      --muted: #6e655d;
+      --line: rgba(80, 64, 49, 0.12);
+      --shadow: 0 12px 40px rgba(38, 28, 19, 0.08);
+      --shadow-soft: 0 8px 24px rgba(38, 28, 19, 0.06);
+      --accent: #7a6252;
+      --accent-dark: #5e4b3f;
+      --chip: rgba(255,255,255,0.86);
+      --overlay: rgba(0,0,0,0.28);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --container: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #fbfaf8 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    img { display: block; max-width: 100%; }
+    button, input, textarea { font: inherit; }
+    a { color: inherit; }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at top, #ffffff 0%, #f1ece6 100%);
+    }
+
+    .hidden { display: none !important; }
+
+    .access-card, .card {
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .access-card {
+      width: min(100%, 560px);
+      padding: 28px;
+    }
+
+    .access-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+    }
+
+    .access-text, .muted { color: var(--muted); }
+
+    .field { margin-top: 18px; }
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .input, .textarea {
+      width: 100%;
+      border: 1px solid rgba(80,64,49,0.16);
+      border-radius: 14px;
+      padding: 13px 14px;
+      background: rgba(255,255,255,0.92);
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .input:focus, .textarea:focus {
+      border-color: rgba(122, 98, 82, 0.45);
+      box-shadow: 0 0 0 4px rgba(122, 98, 82, 0.12);
+    }
+
+    .textarea { min-height: 120px; resize: vertical; }
+
+    .tip {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(249,247,244,0.96);
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .btn, .icon-btn {
+      border: 0;
+      cursor: pointer;
+      transition: transform .16s ease, background .16s ease, opacity .16s ease;
+    }
+
+    .btn:hover, .icon-btn:hover { transform: translateY(-1px); }
+    .btn:active, .icon-btn:active { transform: translateY(0); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      min-height: 48px;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.88);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .site {
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--container));
+      margin: 0 auto;
+    }
+
+    .hero-wrap {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f4ef 100%);
+    }
+
+    .hero-top {
+      padding: 72px 0 40px;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      font-size: .9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .tribute {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      max-width: 920px;
+      color: var(--muted);
+      margin: 18px 0 0;
+    }
+
+    .hero-card {
+      position: relative;
+      margin-top: 28px;
+      overflow: hidden;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-slideshow {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      background: #ded7d1;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0;
+      filter: blur(2px) brightness(0.95);
+      transform: scale(1.01) translateX(0);
+      transition: opacity 2.2s ease-in-out, transform 7s ease-in-out, filter 2.2s ease-in-out;
+      will-change: opacity, transform, filter;
+    }
+
+    .slide.active.pan-left {
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      transform: scale(1.08) translateX(-2%);
+    }
+
+    .slide.active.pan-right {
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      transform: scale(1.08) translateX(2%);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.35), rgba(0,0,0,0.1), transparent);
+      pointer-events: none;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.18) 100%);
+      pointer-events: none;
+    }
+
+    .hero-controls {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.35);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    .photo-counter {
+      position: absolute;
+      bottom: 112px;
+      left: 24px;
+      z-index: 3;
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.36);
+      color: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      font-size: .78rem;
+    }
+
+    .hero-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 24px;
+    }
+
+    .hero-caption-inner {
+      max-width: 760px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.28);
+      color: white;
+      backdrop-filter: blur(8px);
+    }
+
+    .eyebrow {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .hero-caption-inner h2 {
+      margin: 10px 0 0;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      line-height: 1.1;
+    }
+
+    .hero-caption-inner p {
+      margin: 8px 0 0;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0 0;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--chip);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    .section {
+      padding-top: 28px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    .card h3 {
+      margin: 0 0 16px;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+      gap: 24px;
+      padding: 28px 0 40px;
+    }
+
+    .stack { display: grid; gap: 24px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .help-box, .note-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 15px 16px;
+      background: rgba(250,248,245,0.96);
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .help-box ol, .side-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: white;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-media {
+      aspect-ratio: 16 / 9;
+      background: #ece7e2;
+      overflow: hidden;
+    }
+
+    .gallery-media img, .gallery-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-body {
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 12px;
+      text-align: center;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .kpi-value {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .memory-list, .timeline-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .memory-item, .timeline-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: white;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .timeline-year {
+      color: var(--muted);
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+
+    .fullscreen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .fullscreen.open { display: flex; }
+
+    .fullscreen-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 28px;
+    }
+
+    .fullscreen img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(1);
+      filter: blur(1px);
+      transition: opacity 1.8s ease-in-out, transform 1.8s ease-in-out, filter 1.8s ease-in-out;
+    }
+
+    .fullscreen img.active {
+      opacity: 1;
+      transform: scale(1.01);
+      filter: blur(0);
+    }
+
+    .fullscreen-btn {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      z-index: 3;
+    }
+
+    .fullscreen-btn svg { width: 20px; height: 20px; }
+    .fullscreen-close { top: 16px; right: 16px; }
+    .fullscreen-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+    .fullscreen-next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+    .fullscreen-counter {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.42);
+      color: white;
+      font-size: .92rem;
+      z-index: 3;
+      backdrop-filter: blur(10px);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 920px) {
+      .grid-main { grid-template-columns: 1fr; }
+      .hero-top { padding-top: 52px; }
+      .hero-slideshow { height: 420px; }
+      .hero-caption { padding: 18px; }
+      .photo-counter { bottom: 104px; left: 18px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(calc(100% - 20px), var(--container)); }
+      .card, .access-card { padding: 18px; }
+      .hero-slideshow { height: 340px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .hero-controls { top: 12px; right: 12px; }
+      .icon-btn { width: 34px; height: 34px; }
+      .slide { object-position: center center; }
+      .slide.active.pan-left { transform: scale(1.06) translateX(-1.5%); }
+      .slide.active.pan-right { transform: scale(1.06) translateX(1.5%); }
+      .photo-counter { bottom: 92px; }
+      .access-title { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="accessScreen" class="screen">
+    <div class="access-card">
+      <h1 class="access-title">
+        <span aria-hidden="true">🔒</span>
+        <span>Private Memorial Access</span>
+      </h1>
+      <p class="access-text">This page is intended for family and close friends. Enter the shared password to view and contribute memories.</p>
+      <div class="field">
+        <label class="label" for="passwordInput">Password</label>
+        <input class="input" id="passwordInput" type="password" placeholder="Enter memorial password" />
+      </div>
+      <div class="tip">Replace the default password in the code with your own family password before publishing if you want to change it later.</div>
+      <div class="actions" style="margin-top:16px;">
+        <button id="enterBtn" class="btn" type="button">Enter Memorial Page</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="site" class="site hidden">
+    <div id="fullscreenGallery" class="fullscreen" aria-hidden="true">
+      <button id="fullscreenClose" class="fullscreen-btn fullscreen-close" type="button" aria-label="Close fullscreen gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <button id="fullscreenPrev" class="fullscreen-btn fullscreen-prev" type="button" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div id="fullscreenInner" class="fullscreen-inner"></div>
+      <button id="fullscreenNext" class="fullscreen-btn fullscreen-next" type="button" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div id="fullscreenCounter" class="fullscreen-counter"></div>
+    </div>
+
+    <section class="hero-wrap">
+      <div class="container hero-top">
+        <div class="badge">Private Family Memorial</div>
+        <h1 id="memorialHeading"></h1>
+        <p id="tributeMessage" class="tribute"></p>
+
+        <div id="heroCard" class="hero-card">
+          <div class="hero-controls">
+            <button id="prevSlideBtn" class="icon-btn" type="button" aria-label="Previous slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button id="nextSlideBtn" class="icon-btn" type="button" aria-label="Next slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button id="openFullscreenBtn" class="icon-btn" type="button" aria-label="Open fullscreen gallery">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </button>
+          </div>
+          <div id="heroSlideshow" class="hero-slideshow"></div>
+          <div class="hero-gradient"></div>
+          <div class="hero-vignette"></div>
+          <div id="photoCounter" class="photo-counter"></div>
+          <div class="hero-caption">
+            <div class="hero-caption-inner">
+              <div class="eyebrow">In Loving Memory</div>
+              <h2 id="heroName"></h2>
+              <p id="heroDates"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chips">
+          <div class="chip">🎵 Soft memorial music</div>
+          <div class="chip">🔒 Password entry</div>
+          <div class="chip">📷 Photo &amp; video sharing</div>
+          <div class="chip">👨‍👩‍👧‍👦 Friends and family contributions</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <h3>Memorial Music</h3>
+          <p class="muted">Background music starts softly after the page opens when the browser allows autoplay. The slideshow randomizes on each visit, advances every 7 seconds, gently pans left and right with a cinematic Ken Burns effect, preloads the next image, pauses on hover, and uses a soft vignette plus blur-to-sharp transitions for a polished presentation.</p>
+          <audio id="memorialAudio" loop playsinline preload="auto" class="hidden">
+            <source id="audioSource" src="" type="audio/mpeg" />
+          </audio>
+          <div class="actions" style="margin-top:14px;">
+            <button id="muteBtn" class="btn" type="button">Mute Music</button>
+          </div>
+          <div class="tip">Some browsers block autoplay until a visitor interacts with the page. Entering the password usually counts as that interaction.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <h3>John's Life Timeline</h3>
+          <div id="timelineList" class="timeline-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <h3>Leave a Memory</h3>
+          <div class="form-grid">
+            <div>
+              <label class="label" for="memoryAuthor">Your name</label>
+              <input class="input" id="memoryAuthor" type="text" placeholder="Enter your name" />
+            </div>
+            <div class="full">
+              <label class="label" for="memoryText">Your memory</label>
+              <textarea class="textarea" id="memoryText" placeholder="Share a favorite story, memory, or note about John"></textarea>
+            </div>
+          </div>
+          <div class="actions" style="margin-top:14px;">
+            <button id="postMemoryBtn" class="btn" type="button">Post memory</button>
+          </div>
+          <div id="memoryList" class="memory-list" style="margin-top:18px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container grid-main">
+      <div class="stack">
+        <section class="card">
+          <h3>Share a memory</h3>
+          <div class="form-grid">
+            <div>
+              <label class="label" for="visitorName">Your name</label>
+              <input class="input" id="visitorName" type="text" placeholder="Enter your name" />
+            </div>
+            <div>
+              <label class="label" for="fileInput">Upload photos or videos</label>
+              <input class="input" id="fileInput" type="file" multiple accept="image/*,video/*" />
+            </div>
+            <div class="full">
+              <label class="label" for="uploadMessage">Message or memory</label>
+              <textarea class="textarea" id="uploadMessage" placeholder="Write a story, note, or caption to go with your upload"></textarea>
+            </div>
+          </div>
+          <div class="help-box" style="margin-top:16px;">
+            Files selected here are previewed only in this browser and are not permanently saved on the page. To share photos or videos with the family, open John's memorial folder and upload them directly to Google Drive.
+          </div>
+          <div class="note-box" style="margin-top:14px;">
+            <strong style="color:var(--text);">How to share memories</strong>
+            <ol>
+              <li>Enter your name and write a short memory or note.</li>
+              <li>Select photos or videos to preview them on this page.</li>
+              <li>Click the folder button on the right to open John's memorial photo folder in Google Drive.</li>
+              <li>Upload your files there so the family can keep them permanently.</li>
+            </ol>
+          </div>
+          <div class="actions" style="margin-top:16px;">
+            <button class="btn" type="button">Preview contribution</button>
+            <button id="clearPreviewBtn" class="btn secondary" type="button">Clear form</button>
+          </div>
+          <div id="previewStatus" class="tip hidden"></div>
+        </section>
+
+        <section class="card">
+          <h3>Shared gallery</h3>
+          <div id="galleryEmpty" class="help-box">No items have been added in this preview yet.</div>
+          <div id="galleryGrid" class="gallery-grid hidden"></div>
+        </section>
+      </div>
+
+      <div class="stack">
+        <section class="card">
+          <h3>Memorial details</h3>
+          <div class="muted" id="detailsBlock"></div>
+        </section>
+
+        <section class="card">
+          <h3>Family album</h3>
+          <p class="muted">Use the button below to open John's memorial photo folder in Google Drive, where family and friends can view and upload full-size photos and videos.</p>
+          <div class="actions" style="margin-top:14px;">
+            <a id="albumBtn" class="btn" target="_blank" rel="noreferrer">Open John's Memorial Photo Folder</a>
+          </div>
+          <div class="tip">Paste your Google Drive shared folder link into the <strong>GOOGLE_ALBUM_URL</strong> value in the code if you want to change it later. In Google Drive, give trusted family and friends editor access if you want them to upload their own photos and videos.</div>
+        </section>
+
+        <section class="card">
+          <h3>Privacy</h3>
+          <ul class="side-list muted">
+            <li>Use a strong family password.</li>
+            <li>Share the password only with trusted people.</li>
+            <li>Avoid posting sensitive personal or financial details.</li>
+            <li>Remember: a front-end password is basic privacy, not bank-level security.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>At a glance</h3>
+          <div class="kpi-grid">
+            <div class="kpi"><div>📷</div><div id="photosCount" class="kpi-value">0</div><div class="tiny">Photos</div></div>
+            <div class="kpi"><div>🎬</div><div id="videosCount" class="kpi-value">0</div><div class="tiny">Videos</div></div>
+            <div class="kpi"><div>👥</div><div id="itemsCount" class="kpi-value">0</div><div class="tiny">Items</div></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Family contact</h3>
+          <div class="muted">
+            <p>Questions, stories, or access requests can be directed to:</p>
+            <p><strong id="familyContact"></strong></p>
+            <p id="familyEmail"></p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const CONFIG = {
+      MEMORIAL_PASSWORD: "JB2 Memorial",
+      GOOGLE_ALBUM_URL: "https://drive.google.com/drive/folders/1TYU8ytLv5ToAYJ8QSpyWas7OrRaxy49e?usp=drive_link",
+      MEMORIAL_NAME: "John Nicholas Bielski II",
+      MEMORIAL_DATES: "March 10, 1972 – October 20, 2025",
+      FAMILY_CONTACT: "Dan Schacher",
+      FAMILY_EMAIL: "danschacher6@gmail.com",
+      TRIBUTE_MESSAGE: "John Bielski was a father, a husband, a friend and so much more to all of us. I created John's memorial page for his birthday on March 10th so we can all celebrate John's life and impact on our lives by sharing our memories, viewing and adding photos and videos from the past and stay in touch with each other. In loving Memory, Dan Schacher",
+      MUSIC_URL: "https://drive.google.com/uc?export=download&id=1HhBXXoPR99CMisofjKt4h2NEy915Bo8n",
+      SLIDE_DURATION_MS: 7000,
+      SLIDESHOW_IMAGES: [
+        "https://drive.google.com/uc?export=view&id=1YTq0GPHipJV5y7fBauNQ_RMwsx4bgFOQ",
+        "https://drive.google.com/uc?export=view&id=1y8fhmKtsl4KjJe6h2DELqtsMyo1XMhgn",
+        "https://drive.google.com/uc?export=view&id=1BUWMETExsStXokLyj00Poev5AhgG9eUR",
+        "https://drive.google.com/uc?export=view&id=1DnljHzLaFmHjj7hfF--8dId9Vc5ODi8A",
+        "https://drive.google.com/uc?export=view&id=1l6Lrx2U0hdMsPrvkG1W3KmGt2ErHAByz",
+        "https://drive.google.com/uc?export=view&id=1vxzQL0jmrNTZfFmSZYLCwqmQaGVn7MwF",
+        "https://drive.google.com/uc?export=view&id=1p4ClArH5fYyI2wCxSwDXC-lpB42g66XL",
+        "https://drive.google.com/uc?export=view&id=137X_KiH7QZpQhx7WNxIdELeCefFhqNK1",
+        "https://drive.google.com/uc?export=view&id=1pmF_gODN9uPFPG_RnP8Hr3xbKiTJVRsm",
+        "https://drive.google.com/uc?export=view&id=1VMPvf4G766mgYIXCL1lFn-VxNx8DQzU-",
+        "https://drive.google.com/uc?export=view&id=1WuVfZnRXgLsZe2UwxRJHkakhL5Qmtsk9",
+        "https://drive.google.com/uc?export=view&id=1iV4FQfyctMlFimCVMQ9-ICpNL49iEp3Y",
+        "https://drive.google.com/uc?export=view&id=1qX2s71-mDAMsYqiH6Cy90Pj4_PEugqSH",
+        "https://drive.google.com/uc?export=view&id=1btvS_WChJcp-fMqNRfMWNm-RSFNCSAMV",
+        "https://drive.google.com/uc?export=view&id=1wntAzy2nPoj9dGmjExK_a8Lkpzlpesym",
+        "https://drive.google.com/uc?export=view&id=1PD3LJUCFuHBpWN4Uan0ysR9Wg3DdMTFr",
+        "https://drive.google.com/uc?export=view&id=1a1ax27wa8lCD4z3omHjNKxPVlK30V4EA",
+        "https://drive.google.com/uc?export=view&id=1vR_Do98qt1GA-IvKxp7GyXAI0AsASq9n",
+        "https://drive.google.com/uc?export=view&id=1D8BZNTn3FqM2eUikQFON9MdeEiilrUI7",
+        "https://drive.google.com/uc?export=view&id=1oKendYF7I9CUec6KODQqfdxrg5E81oL2",
+        "https://drive.google.com/uc?export=view&id=1Lwfn_VQWIzfkw9P130HxplGEzbbuJBCs",
+        "https://drive.google.com/uc?export=view&id=1N3IIIlSk1nSJPm6ANGQ7KByzEQBX15wi",
+        "https://drive.google.com/uc?export=view&id=1dOattigJT_so02ILMOWcwjyWdRKE7-uw",
+        "https://drive.google.com/uc?export=view&id=1cqclRjGHPzGg7HAeK_Wzu-039-eUlRrV",
+        "https://drive.google.com/uc?export=view&id=1z6eG1oca0ElA-AMVcvRr9Rwo_TAchLR-",
+        "https://drive.google.com/uc?export=view&id=1rV1jCUy9rG5nCzl0K5XCIfDTCIT2WUWX",
+        "https://drive.google.com/uc?export=view&id=1_HkatW55CJZ9og-ayDLiFtm413IgeJu5",
+        "https://drive.google.com/uc?export=view&id=12SuERPl7gYwPoR7pT4hef97Vg_XJykko",
+        "https://drive.google.com/uc?export=view&id=1xzEfg1BebFugLaebP8hCVS1aLJgxSvTV",
+        "https://drive.google.com/uc?export=view&id=1mUO9oGeDVroRQCkwzHy6g6pt_HqiH8H1",
+        "https://drive.google.com/uc?export=view&id=1pSWzq0at8NUu9XlnfXsiYEpeGuLsQf6R",
+        "https://drive.google.com/uc?export=view&id=16ZXp8wel6ToqizrPF54oLlgEldQBMqzO",
+        "https://drive.google.com/uc?export=view&id=1gpAHxJmMDlwQ2yqYd-uFS_-MaOBU5xqr",
+        "https://drive.google.com/uc?export=view&id=1LwgwbQM-x_HBmxAjyvctDaII1PTQHE1a",
+        "https://drive.google.com/uc?export=view&id=1JKwoUP6I9ZiZlI-5U5F6Eu9Bn_M_oqWK",
+        "https://drive.google.com/uc?export=view&id=1d3f7HaYQlCwmL-1WJx_Ib70LVD158KkZ",
+        "https://drive.google.com/uc?export=view&id=1liG9quFSheunt7ezrJ2jiHG3wb2te6v5",
+        "https://drive.google.com/uc?export=view&id=1pLazcDNbIJKko8QgPqqxlsbB3pgLa0W9",
+        "https://drive.google.com/uc?export=view&id=1NmSNdfDQ39ajz433ZWfZQZnknQ1-dBDQ",
+        "https://drive.google.com/uc?export=view&id=1uD2wblKUBgdNwtDPwiln3gxNih9ub7B3",
+        "https://drive.google.com/uc?export=view&id=1oQSntLquXmndUz2kHIup8OFRfFbC9_VO",
+        "https://drive.google.com/uc?export=view&id=1nZk-Nk1jQ3lg7tpAtcG2IQDpfc8aQb3t",
+        "https://drive.google.com/uc?export=view&id=1rTVQzXWhy1deEtiEiIV8G8lAQIh7DgYI",
+        "https://drive.google.com/uc?export=view&id=1tRI2j0yIN3mikPHpn-glutTv7RpuZkHR",
+        "https://drive.google.com/uc?export=view&id=1sduZPIC0hMsmbJeTK2WnMFCuf5fSfHEs",
+        "https://drive.google.com/uc?export=view&id=1K9bmN2nfvkJ2m9nGjGc1_HPdzKDNpX_g",
+        "https://drive.google.com/uc?export=view&id=1ppjOI70Bg1t0uWiHy43kVE34WPZ6vMPy",
+        "https://drive.google.com/uc?export=view&id=1IKMfFT--KVw9teHzCORUiAkxbVnYu38a",
+        "https://drive.google.com/uc?export=view&id=1R8ojPT06sEgfN_wbbBgE9928MR27JARM",
+        "https://drive.google.com/uc?export=view&id=1RvG05iYPFdLmJyMbsNOiNl734LK8JBAE",
+        "https://drive.google.com/uc?export=view&id=1q3Zm_Ij6GSFvc20MlMwigm_TYsXowiPA",
+        "https://drive.google.com/uc?export=view&id=103o7M4O3ghDIdTgxsiNsumv-_AcNkra-",
+        "https://drive.google.com/uc?export=view&id=18ZWs4SLbo8jV72h4-NgT40CM6z4JnL-O",
+        "https://drive.google.com/uc?export=view&id=1tas7t966bwDyW9EIV6-cgNSn9AM7c5ho",
+        "https://drive.google.com/uc?export=view&id=1D36T1GEkJGc_sDDVZ6frM3qni9Ce1dpX",
+        "https://drive.google.com/uc?export=view&id=1YR1X_OkLsHYrTdBjThm17KHJQ9jFC5bd",
+        "https://drive.google.com/uc?export=view&id=1jcmx398mZ5jRoI9q4NvyWTfxjtE8xuMf",
+        "https://drive.google.com/uc?export=view&id=1S8V7gfl0XsYF0FuhNpFCQGZViBN67_Gr",
+        "https://drive.google.com/uc?export=view&id=1nbfv9RygZltFvUuGh9l3E7Jc6-7L3fuh",
+        "https://drive.google.com/uc?export=view&id=1pNlnJESNoWM9M2q3eMaEIs60_5aO1h9W",
+        "https://drive.google.com/uc?export=view&id=1FfMVh2jjRosdUyR7BJRAMVgd7yG4Ul5g",
+        "https://drive.google.com/uc?export=view&id=1duNFtStvrKM9Ua0N-anyIzHWoG1XMsLb",
+        "https://drive.google.com/uc?export=view&id=1Ox1VK6XQZ2Vg5G7NOSkSGUhlnsrh69n-",
+        "https://drive.google.com/uc?export=view&id=1AyPFZcibz2BQBn4NTEqqRqrpdP2xDkWv",
+        "https://drive.google.com/uc?export=view&id=1YHodwA2a-kW4IroI-wvjj8T8MRtLlQOz",
+        "https://drive.google.com/uc?export=view&id=1q2r4CYINJDO5_-jY_dNWAXQeBV6w07vc",
+        "https://drive.google.com/uc?export=view&id=1B67KkaXZ_WwPhQBlWcB4HoMqBGnZQz4W",
+        "https://drive.google.com/uc?export=view&id=11NBLwX1uEEWvs0kh6K2AVjc5e86kemth",
+        "https://drive.google.com/uc?export=view&id=17jKnwCCZC5e7EQLL8sDBKoG4ifxbLS0b",
+        "https://drive.google.com/uc?export=view&id=1CW9WCeuj-N6cKfRm85A2x9Zevj65nuLo",
+        "https://drive.google.com/uc?export=view&id=1hp3WAdhR3Pzi8p9t1qlRuPA9iFwYxOcL",
+        "https://drive.google.com/uc?export=view&id=1aGnZ9wM2wtjm2RISp6h9phsRU2bwZtiR",
+        "https://drive.google.com/uc?export=view&id=1xvfpYbMDlJO53uC4mlp5RX_FInon0l7t",
+        "https://drive.google.com/uc?export=view&id=1dXsotCFwg7QHhu8dNUJTo1sW_pSgDPXX",
+        "https://drive.google.com/uc?export=view&id=1JgpZCCmJaWZ1Ob3PNHmK2IoK_nxsYgbN",
+        "https://drive.google.com/uc?export=view&id=12QTGzSKWFKv469BdIQtMdHb3oKA72urW",
+        "https://drive.google.com/uc?export=view&id=1Jt2RmhHwlsAKknreIdAYQTFedMZeOO-t",
+        "https://drive.google.com/uc?export=view&id=1f38ZNJeacZI4SIY1yVw8_HNNfQLy6dS-",
+        "https://drive.google.com/uc?export=view&id=1GBNn1AOdGFzDAkuKCzQqyU3MhR2pMapn",
+        "https://drive.google.com/uc?export=view&id=11wtBIYmOsVh7VsSPOGBWu7xfr8ME480k"
+      ],
+      TIMELINE_ITEMS: [
+        { year: "1972", title: "Born", description: "John Nicholas Bielski II was born on March 10, 1972." },
+        { year: "2025", title: "Remembered", description: "Family and friends continue to celebrate John's life, love, humor, and lasting impact." }
+      ],
+      MEMORIES: [
+        { author: "Dan Schacher", text: "John was larger than life and left an unforgettable impact on everyone who knew him." }
+      ]
+    };
+
+    const state = {
+      isUnlocked: false,
+      isMuted: false,
+      audioReady: false,
+      currentSlide: 0,
+      shuffledSlides: [],
+      slideshowTimer: null,
+      paused: false,
+      galleryItems: [],
+      memories: [...CONFIG.MEMORIES]
+    };
+
+    const accessScreen = document.getElementById('accessScreen');
+    const site = document.getElementById('site');
+    const passwordInput = document.getElementById('passwordInput');
+    const enterBtn = document.getElementById('enterBtn');
+    const memorialAudio = document.getElementById('memorialAudio');
+    const audioSource = document.getElementById('audioSource');
+    const muteBtn = document.getElementById('muteBtn');
+    const heroSlideshow = document.getElementById('heroSlideshow');
+    const photoCounter = document.getElementById('photoCounter');
+    const fullscreenGallery = document.getElementById('fullscreenGallery');
+    const fullscreenInner = document.getElementById('fullscreenInner');
+    const fullscreenCounter = document.getElementById('fullscreenCounter');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const galleryEmpty = document.getElementById('galleryEmpty');
+    const previewStatus = document.getElementById('previewStatus');
+    const fileInput = document.getElementById('fileInput');
+    const visitorName = document.getElementById('visitorName');
+    const uploadMessage = document.getElementById('uploadMessage');
+    const clearPreviewBtn = document.getElementById('clearPreviewBtn');
+    const memoryAuthor = document.getElementById('memoryAuthor');
+    const memoryText = document.getElementById('memoryText');
+    const postMemoryBtn = document.getElementById('postMemoryBtn');
+    const memoryList = document.getElementById('memoryList');
+    const timelineList = document.getElementById('timelineList');
+    const photosCount = document.getElementById('photosCount');
+    const videosCount = document.getElementById('videosCount');
+    const itemsCount = document.getElementById('itemsCount');
+
+    function shuffleArray(arr) {
+      return [...arr]
+        .map(item => ({ item, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function initializeStaticContent() {
+      setText('memorialHeading', `In Loving Memory of ${CONFIG.MEMORIAL_NAME}`);
+      setText('tributeMessage', CONFIG.TRIBUTE_MESSAGE);
+      setText('heroName', CONFIG.MEMORIAL_NAME);
+      setText('heroDates', CONFIG.MEMORIAL_DATES);
+      setText('familyContact', CONFIG.FAMILY_CONTACT);
+      setText('familyEmail', CONFIG.FAMILY_EMAIL);
+      document.getElementById('albumBtn').href = CONFIG.GOOGLE_ALBUM_URL;
+      document.getElementById('detailsBlock').innerHTML = `
+        <p><strong>Name:</strong> ${CONFIG.MEMORIAL_NAME}</p>
+        <p><strong>Dates:</strong> ${CONFIG.MEMORIAL_DATES}</p>
+        <p><strong>Tribute:</strong> ${CONFIG.TRIBUTE_MESSAGE}</p>
+        <p>Add an obituary link, service information, charity donation request, or family contact details here.</p>
+      `;
+      audioSource.src = CONFIG.MUSIC_URL;
+      memorialAudio.load();
+      renderTimeline();
+      renderMemories();
+    }
+
+    function renderTimeline() {
+      timelineList.innerHTML = '';
+      CONFIG.TIMELINE_ITEMS.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'timeline-item';
+        div.innerHTML = `
+          <div class="timeline-year">${item.year}</div>
+          <h4 style="margin:6px 0 0;font-size:1.15rem;">${item.title}</h4>
+          <p class="muted" style="margin:8px 0 0;">${item.description}</p>
+        `;
+        timelineList.appendChild(div);
+      });
+    }
+
+    function renderMemories() {
+      memoryList.innerHTML = '';
+      state.memories.forEach(memory => {
+        const div = document.createElement('div');
+        div.className = 'memory-item';
+        div.innerHTML = `
+          <div style="font-weight:700;">${memory.author}</div>
+          <div class="muted" style="margin-top:8px;">${memory.text}</div>
+        `;
+        memoryList.appendChild(div);
+      });
+    }
+
+    function renderSlides() {
+      heroSlideshow.innerHTML = '';
+      fullscreenInner.innerHTML = '';
+      state.shuffledSlides.forEach((image, index) => {
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = `John Bielski memorial slideshow ${index + 1}`;
+        img.className = `slide ${index === state.currentSlide ? `active ${index % 2 === 0 ? 'pan-left' : 'pan-right'}` : ''}`;
+        heroSlideshow.appendChild(img);
+
+        const fullImg = document.createElement('img');
+        fullImg.src = image;
+        fullImg.alt = `John Bielski memorial fullscreen slideshow ${index + 1}`;
+        if (index === state.currentSlide) fullImg.classList.add('active');
+        fullscreenInner.appendChild(fullImg);
+      });
+      updateCounters();
+      preloadNextImage();
+    }
+
+    function updateSlides() {
+      const slides = heroSlideshow.querySelectorAll('.slide');
+      const fullSlides = fullscreenInner.querySelectorAll('img');
+      slides.forEach((slide, index) => {
+        slide.className = `slide ${index === state.currentSlide ? `active ${index % 2 === 0 ? 'pan-left' : 'pan-right'}` : ''}`;
+      });
+      fullSlides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === state.currentSlide);
+      });
+      updateCounters();
+      preloadNextImage();
+    }
+
+    function updateCounters() {
+      const total = state.shuffledSlides.length;
+      const current = total ? state.currentSlide + 1 : 0;
+      photoCounter.textContent = `Photo ${current} of ${total}`;
+      fullscreenCounter.textContent = `Photo ${current} of ${total}`;
+    }
+
+    function preloadNextImage() {
+      if (!state.shuffledSlides.length) return;
+      const nextIndex = (state.currentSlide + 1) % state.shuffledSlides.length;
+      const img = new Image();
+      img.src = state.shuffledSlides[nextIndex];
+    }
+
+    function goToNextSlide() {
+      if (!state.shuffledSlides.length) return;
+      state.currentSlide = (state.currentSlide + 1) % state.shuffledSlides.length;
+      updateSlides();
+      restartSlideshow();
+    }
+
+    function goToPreviousSlide() {
+      if (!state.shuffledSlides.length) return;
+      state.currentSlide = (state.currentSlide - 1 + state.shuffledSlides.length) % state.shuffledSlides.length;
+      updateSlides();
+      restartSlideshow();
+    }
+
+    function startSlideshow() {
+      stopSlideshow();
+      if (state.paused || !state.shuffledSlides.length) return;
+      state.slideshowTimer = window.setInterval(goToNextSlide, CONFIG.SLIDE_DURATION_MS);
+    }
+
+    function stopSlideshow() {
+      if (state.slideshowTimer) {
+        clearInterval(state.slideshowTimer);
+        state.slideshowTimer = null;
+      }
+    }
+
+    function restartSlideshow() {
+      startSlideshow();
+    }
+
+    async function tryPlayAudio() {
+      memorialAudio.volume = 0.02;
+      memorialAudio.muted = state.isMuted;
+      try {
+        await memorialAudio.play();
+        state.audioReady = true;
+        if (!state.isMuted) fadeInAudio();
+      } catch (e) {
+        state.audioReady = false;
+      }
+    }
+
+    function fadeInAudio() {
+      let volume = 0.02;
+      memorialAudio.volume = volume;
+      const fade = setInterval(() => {
+        if (state.isMuted) {
+          clearInterval(fade);
+          return;
+        }
+        volume = Math.min(volume + 0.01, 0.12);
+        memorialAudio.volume = volume;
+        if (volume >= 0.12) clearInterval(fade);
+      }, 400);
+    }
+
+    function toggleMute() {
+      state.isMuted = !state.isMuted;
+      memorialAudio.muted = state.isMuted;
+      muteBtn.textContent = state.isMuted ? 'Unmute Music' : 'Mute Music';
+      if (!state.isMuted && state.audioReady && memorialAudio.paused) {
+        tryPlayAudio();
+      }
+    }
+
+    function handleAccess() {
+      if (passwordInput.value !== CONFIG.MEMORIAL_PASSWORD) {
+        alert('Incorrect password. Please try again.');
+        return;
+      }
+      state.isUnlocked = true;
+      accessScreen.classList.add('hidden');
+      site.classList.remove('hidden');
+      tryPlayAudio();
+      startSlideshow();
+    }
+
+    function renderGallery() {
+      if (!state.galleryItems.length) {
+        galleryGrid.classList.add('hidden');
+        galleryEmpty.classList.remove('hidden');
+      } else {
+        galleryGrid.classList.remove('hidden');
+        galleryEmpty.classList.add('hidden');
+      }
+
+      galleryGrid.innerHTML = '';
+      state.galleryItems.forEach(item => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'gallery-item';
+        const media = item.type.startsWith('video/')
+          ? `<video controls src="${item.url}"></video>`
+          : `<img src="${item.url}" alt="${item.name}">`;
+        wrapper.innerHTML = `
+          <div class="gallery-media">${media}</div>
+          <div class="gallery-body">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+              <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</div>
+              <div class="tiny">${item.size}</div>
+            </div>
+            <div class="tiny">Shared by ${item.sharedBy}</div>
+            <div class="tiny">${item.note}</div>
+          </div>
+        `;
+        galleryGrid.appendChild(wrapper);
+      });
+      updateStats();
+    }
+
+    function updateStats() {
+      const photos = state.galleryItems.filter(item => item.type.startsWith('image/')).length;
+      const videos = state.galleryItems.filter(item => item.type.startsWith('video/')).length;
+      photosCount.textContent = String(photos);
+      videosCount.textContent = String(videos);
+      itemsCount.textContent = String(state.galleryItems.length);
+    }
+
+    function bytesToMb(bytes) {
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function handleFilePreview(event) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length) {
+        previewStatus.classList.add('hidden');
+        return;
+      }
+      const name = visitorName.value.trim() || 'Family & Friends';
+      const note = uploadMessage.value.trim() || 'Shared in loving memory.';
+      const nextItems = files.map(file => ({
+        name: file.name,
+        type: file.type || 'application/octet-stream',
+        url: URL.createObjectURL(file),
+        size: bytesToMb(file.size),
+        sharedBy: name,
+        note
+      }));
+      state.galleryItems = [...nextItems, ...state.galleryItems];
+      previewStatus.textContent = `Ready in preview: ${files.map(f => f.name).join(', ')}`;
+      previewStatus.classList.remove('hidden');
+      renderGallery();
+    }
+
+    function clearPreviewForm() {
+      visitorName.value = '';
+      uploadMessage.value = '';
+      fileInput.value = '';
+      previewStatus.classList.add('hidden');
+    }
+
+    function addMemory() {
+      const author = memoryAuthor.value.trim();
+      const text = memoryText.value.trim();
+      if (!author || !text) return;
+      state.memories.unshift({ author, text });
+      memoryAuthor.value = '';
+      memoryText.value = '';
+      renderMemories();
+    }
+
+    function openFullscreen() {
+      fullscreenGallery.classList.add('open');
+      fullscreenGallery.setAttribute('aria-hidden', 'false');
+      state.paused = true;
+      stopSlideshow();
+    }
+
+    function closeFullscreen() {
+      fullscreenGallery.classList.remove('open');
+      fullscreenGallery.setAttribute('aria-hidden', 'true');
+      state.paused = false;
+      startSlideshow();
+    }
+
+    initializeStaticContent();
+    state.shuffledSlides = shuffleArray(CONFIG.SLIDESHOW_IMAGES);
+    renderSlides();
+    updateStats();
+
+    enterBtn.addEventListener('click', handleAccess);
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleAccess();
+    });
+
+    muteBtn.addEventListener('click', toggleMute);
+    document.getElementById('prevSlideBtn').addEventListener('click', goToPreviousSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', goToNextSlide);
+    document.getElementById('openFullscreenBtn').addEventListener('click', openFullscreen);
+    document.getElementById('fullscreenClose').addEventListener('click', closeFullscreen);
+    document.getElementById('fullscreenPrev').addEventListener('click', goToPreviousSlide);
+    document.getElementById('fullscreenNext').addEventListener('click', goToNextSlide);
+
+    heroSlideshow.addEventListener('mouseenter', () => {
+      state.paused = true;
+      stopSlideshow();
+    });
+    heroSlideshow.addEventListener('mouseleave', () => {
+      if (!fullscreenGallery.classList.contains('open')) {
+        state.paused = false;
+        startSlideshow();
+      }
+    });
+
+    fileInput.addEventListener('change', handleFilePreview);
+    clearPreviewBtn.addEventListener('click', clearPreviewForm);
+    postMemoryBtn.addEventListener('click', addMemory);
+
+    document.addEventListener('keydown', (e) => {
+      if (!fullscreenGallery.classList.contains('open')) return;
+      if (e.key === 'Escape') closeFullscreen();
+      if (e.key === 'ArrowLeft') goToPreviousSlide();
+      if (e.key === 'ArrowRight') goToNextSlide();
+    });
+  </script>
+</body>
+</html>
 
