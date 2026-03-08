@@ -8,19 +8,14 @@
     :root {
       --bg: #f7f5f2;
       --card: rgba(255,255,255,0.88);
-      --card-solid: #ffffff;
       --text: #2f2a25;
       --muted: #6e655d;
       --line: rgba(80, 64, 49, 0.12);
       --shadow: 0 12px 40px rgba(38, 28, 19, 0.08);
       --shadow-soft: 0 8px 24px rgba(38, 28, 19, 0.06);
       --accent: #7a6252;
-      --accent-dark: #5e4b3f;
       --chip: rgba(255,255,255,0.86);
-      --overlay: rgba(0,0,0,0.28);
       --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
       --container: 1200px;
     }
 
@@ -36,6 +31,7 @@
     img { display: block; max-width: 100%; }
     button, input, textarea { font: inherit; }
     a { color: inherit; }
+    .hidden { display: none !important; }
 
     .screen {
       min-height: 100vh;
@@ -45,8 +41,6 @@
       padding: 24px;
       background: radial-gradient(circle at top, #ffffff 0%, #f1ece6 100%);
     }
-
-    .hidden { display: none !important; }
 
     .access-card, .card {
       background: var(--card);
@@ -69,8 +63,6 @@
       font-weight: 700;
       margin: 0 0 12px;
     }
-
-    .access-text, .muted { color: var(--muted); }
 
     .field { margin-top: 18px; }
     .label {
@@ -131,16 +123,22 @@
       min-height: 48px;
     }
 
+    .btn.large {
+      min-height: 62px;
+      padding: 18px 24px;
+      border-radius: 18px;
+      font-size: 1.05rem;
+      width: 100%;
+      justify-content: center;
+    }
+
     .btn.secondary {
       background: rgba(255,255,255,0.88);
       color: var(--text);
       border: 1px solid var(--line);
     }
 
-    .site {
-      min-height: 100vh;
-    }
-
+    .site { min-height: 100vh; }
     .container {
       width: min(calc(100% - 32px), var(--container));
       margin: 0 auto;
@@ -153,9 +151,7 @@
       background: linear-gradient(180deg, #ffffff 0%, #f7f4ef 100%);
     }
 
-    .hero-top {
-      padding: 72px 0 40px;
-    }
+    .hero-top { padding: 72px 0 40px; }
 
     .badge {
       display: inline-flex;
@@ -176,10 +172,10 @@
       letter-spacing: -0.03em;
     }
 
+    .muted, .access-text, .tribute { color: var(--muted); }
     .tribute {
       font-size: clamp(1rem, 1.4vw, 1.15rem);
       max-width: 920px;
-      color: var(--muted);
       margin: 18px 0 0;
     }
 
@@ -194,46 +190,47 @@
     }
 
     .hero-slideshow {
-  position: relative;
-  height: 520px;
-  overflow: hidden;
-  background: #ded7d1;
-}
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+      background: #ded7d1;
+    }
+
+    .hero-slideshow::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(231,224,216,0.32) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
 
     .slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-  opacity: 0;
-  filter: blur(2px) brightness(0.95);
-  transform: scale(1.01) translateX(0);
-  transition: opacity 2.2s ease-in-out, transform 7s ease-in-out, filter 2.2s ease-in-out;
-  will-change: opacity, transform, filter;
-}
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      opacity: 0;
+      filter: blur(2px) brightness(0.95);
+      transform: scale(1.01) translateX(0);
+      transition: opacity 2.2s ease-in-out, transform 7s ease-in-out, filter 2.2s ease-in-out;
+      will-change: opacity, transform, filter;
+    }
 
     .slide.active.pan-left {
-  opacity: 1;
-  filter: blur(0) brightness(1);
-  transform: scale(1.02) translateX(-0.6%);
-}
-
-.slide.active.pan-right {
-  opacity: 1;
-  filter: blur(0) brightness(1);
-  transform: scale(1.02) translateX(0.6%);
-}
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      transform: scale(1.02) translateX(-0.6%);
     }
-.hero-slideshow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(231,224,216,0.32) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
+
+    .slide.active.pan-right {
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      transform: scale(1.02) translateX(0.6%);
+    }
+
     .hero-gradient {
       position: absolute;
       inset: 0;
@@ -334,7 +331,7 @@
       gap: 8px;
       border-radius: 999px;
       padding: 10px 14px;
-      background: var(--chip);
+      background: rgba(255,255,255,0.86);
       border: 1px solid var(--line);
       box-shadow: var(--shadow-soft);
       color: var(--muted);
@@ -342,14 +339,8 @@
       font-weight: 600;
     }
 
-    .section {
-      padding-top: 28px;
-    }
-
-    .card {
-      padding: 24px;
-    }
-
+    .section { padding-top: 28px; }
+    .card { padding: 24px; }
     .card h3 {
       margin: 0 0 16px;
       font-size: 1.5rem;
@@ -391,6 +382,43 @@
     .help-box ol, .side-list {
       margin: 8px 0 0;
       padding-left: 20px;
+    }
+
+    .album-steps {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .album-step {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .album-step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .album-step h4 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .album-step p {
+      margin: 0;
+      color: var(--muted);
     }
 
     .gallery-grid {
@@ -450,12 +478,12 @@
       margin-top: 4px;
     }
 
-    .memory-list, .timeline-list {
+    .timeline-list {
       display: grid;
       gap: 14px;
     }
 
-    .memory-item, .timeline-item {
+    .timeline-item {
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 18px;
@@ -546,18 +574,6 @@
       backdrop-filter: blur(10px);
     }
 
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
     @media (max-width: 920px) {
       .grid-main { grid-template-columns: 1fr; }
       .hero-top { padding-top: 52px; }
@@ -586,34 +602,23 @@
 <body>
   <div id="accessScreen" class="screen">
     <div class="access-card">
-      <h1 class="access-title">
-        <span aria-hidden="true">🔒</span>
-        <span>Private Memorial Access</span>
-      </h1>
+      <h1 class="access-title"><span aria-hidden="true">🔒</span><span>Private Memorial Access</span></h1>
       <p class="access-text">This page is intended for family and close friends. Enter the shared password to view and contribute memories.</p>
       <div class="field">
         <label class="label" for="passwordInput">Password</label>
         <input class="input" id="passwordInput" type="password" placeholder="Enter memorial password" />
       </div>
       <div class="tip">Replace the default password in the code with your own family password before publishing if you want to change it later.</div>
-      <div class="actions" style="margin-top:16px;">
-        <button id="enterBtn" class="btn" type="button">Enter Memorial Page</button>
-      </div>
+      <div class="actions" style="margin-top:16px;"><button id="enterBtn" class="btn" type="button">Enter Memorial Page</button></div>
     </div>
   </div>
 
   <div id="site" class="site hidden">
     <div id="fullscreenGallery" class="fullscreen" aria-hidden="true">
-      <button id="fullscreenClose" class="fullscreen-btn fullscreen-close" type="button" aria-label="Close fullscreen gallery">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-      <button id="fullscreenPrev" class="fullscreen-btn fullscreen-prev" type="button" aria-label="Previous slide">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
+      <button id="fullscreenClose" class="fullscreen-btn fullscreen-close" type="button" aria-label="Close fullscreen gallery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <button id="fullscreenPrev" class="fullscreen-btn fullscreen-prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div id="fullscreenInner" class="fullscreen-inner"></div>
-      <button id="fullscreenNext" class="fullscreen-btn fullscreen-next" type="button" aria-label="Next slide">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
+      <button id="fullscreenNext" class="fullscreen-btn fullscreen-next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
       <div id="fullscreenCounter" class="fullscreen-counter"></div>
     </div>
 
@@ -622,37 +627,23 @@
         <div class="badge">Private Family Memorial</div>
         <h1 id="memorialHeading"></h1>
         <p id="tributeMessage" class="tribute"></p>
-
         <div id="heroCard" class="hero-card">
           <div class="hero-controls">
-            <button id="prevSlideBtn" class="icon-btn" type="button" aria-label="Previous slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button id="nextSlideBtn" class="icon-btn" type="button" aria-label="Next slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-            <button id="openFullscreenBtn" class="icon-btn" type="button" aria-label="Open fullscreen gallery">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-            </button>
+            <button id="prevSlideBtn" class="icon-btn" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button id="nextSlideBtn" class="icon-btn" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+            <button id="openFullscreenBtn" class="icon-btn" type="button" aria-label="Open fullscreen gallery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
           </div>
           <div id="heroSlideshow" class="hero-slideshow"></div>
           <div class="hero-gradient"></div>
           <div class="hero-vignette"></div>
           <div id="photoCounter" class="photo-counter"></div>
-          <div class="hero-caption">
-            <div class="hero-caption-inner">
-              <div class="eyebrow">In Loving Memory</div>
-              <h2 id="heroName"></h2>
-              <p id="heroDates"></p>
-            </div>
-          </div>
+          <div class="hero-caption"><div class="hero-caption-inner"><div class="eyebrow">In Loving Memory</div><h2 id="heroName"></h2><p id="heroDates"></p></div></div>
         </div>
-
         <div class="chips">
           <div class="chip">🎵 Soft memorial music</div>
           <div class="chip">🔒 Password entry</div>
           <div class="chip">📷 Photo &amp; video sharing</div>
-          <div class="chip">👨‍👩‍👧‍👦 Friends and family contributions</div>
+          <div class="chip">👨‍👩‍👧‍👦 Family contributions</div>
         </div>
       </div>
     </section>
@@ -662,12 +653,8 @@
         <div class="card">
           <h3>Memorial Music</h3>
           <p class="muted">Background music starts softly after the page opens when the browser allows autoplay. The slideshow randomizes on each visit, advances every 7 seconds, gently pans left and right with a cinematic Ken Burns effect, preloads the next image, pauses on hover, and uses a soft vignette plus blur-to-sharp transitions for a polished presentation.</p>
-          <audio id="memorialAudio" loop playsinline preload="auto" class="hidden">
-            <source id="audioSource" src="" type="audio/mpeg" />
-          </audio>
-          <div class="actions" style="margin-top:14px;">
-            <button id="muteBtn" class="btn" type="button">Mute Music</button>
-          </div>
+          <audio id="memorialAudio" loop playsinline preload="auto" class="hidden"><source id="audioSource" src="" type="audio/mpeg" /></audio>
+          <div class="actions" style="margin-top:14px;"><button id="muteBtn" class="btn" type="button">Mute Music</button></div>
           <div class="tip">Some browsers block autoplay until a visitor interacts with the page. Entering the password usually counts as that interaction.</div>
         </div>
       </div>
@@ -682,63 +669,21 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="card">
-          <h3>Leave a Memory</h3>
-          <div class="form-grid">
-            <div>
-              <label class="label" for="memoryAuthor">Your name</label>
-              <input class="input" id="memoryAuthor" type="text" placeholder="Enter your name" />
-            </div>
-            <div class="full">
-              <label class="label" for="memoryText">Your memory</label>
-              <textarea class="textarea" id="memoryText" placeholder="Share a favorite story, memory, or note about John"></textarea>
-            </div>
-          </div>
-          <div class="actions" style="margin-top:14px;">
-            <button id="postMemoryBtn" class="btn" type="button">Post memory</button>
-          </div>
-          <div id="memoryList" class="memory-list" style="margin-top:18px;"></div>
-        </div>
-      </div>
-    </section>
-
     <main class="container grid-main">
       <div class="stack">
         <section class="card">
-          <h3>Share a memory</h3>
-          <div class="form-grid">
-            <div>
-              <label class="label" for="visitorName">Your name</label>
-              <input class="input" id="visitorName" type="text" placeholder="Enter your name" />
-            </div>
-            <div>
-              <label class="label" for="fileInput">Upload photos or videos</label>
-              <input class="input" id="fileInput" type="file" multiple accept="image/*,video/*" />
-            </div>
-            <div class="full">
-              <label class="label" for="uploadMessage">Message or memory</label>
-              <textarea class="textarea" id="uploadMessage" placeholder="Write a story, note, or caption to go with your upload"></textarea>
-            </div>
+          <h3>Family Album</h3>
+          <p class="muted">Use the large button below to open the Remembering John family photo and video folders. Everyone you invite as an editor can upload their own photos and videos directly into the shared Google Drive family album.</p>
+          <div class="actions" style="margin-top:16px;"><a id="albumBtnLarge" class="btn large" target="_blank" rel="noreferrer">Open Remembering John Photo &amp; Video Folders</a></div>
+          <div class="album-steps">
+            <div class="album-step"><div class="album-step-number">1</div><h4>Open John's memorial folder</h4><p>Click the large brown button above. A new Google Drive window will open with John's Remembering John photo and video folders.</p></div>
+            <div class="album-step"><div class="album-step-number">2</div><h4>Sign in to Google if needed</h4><p>If Google asks you to sign in, use the email address to which Dan gave you editor access. Once signed in, you should see the shared family folder.</p></div>
+            <div class="album-step"><div class="album-step-number">3</div><h4>Open the folder where you want to add memories</h4><p>Inside the shared drive folder, open the main photo or video folder. You can also open any subfolder if the family organizes photos by year, event, or topic.</p></div>
+            <div class="album-step"><div class="album-step-number">4</div><h4>Upload your own photos and videos</h4><p>In Google Drive, click <strong>New</strong>, then choose <strong>File upload</strong> or <strong>Folder upload</strong>. You can also drag and drop photos and videos directly into the open folder window.</p></div>
+            <div class="album-step"><div class="album-step-number">5</div><h4>Name files clearly</h4><p>Consider renaming files with a date, event, or short description so family members know what they are viewing, such as <strong>1998_family_trip.jpg</strong> or <strong>birthday_video_2007.mp4</strong>.</p></div>
+            <div class="album-step"><div class="album-step-number">6</div><h4>Come back to the memorial page anytime</h4><p>The slideshow on this page uses curated site photos, while the family album remains the shared place for everyone to view and contribute the full photo and video collection.</p></div>
           </div>
-          <div class="help-box" style="margin-top:16px;">
-            Files selected here are previewed only in this browser and are not permanently saved on the page. To share photos or videos with the family, open John's memorial folder and upload them directly to Google Drive.
-          </div>
-          <div class="note-box" style="margin-top:14px;">
-            <strong style="color:var(--text);">How to share memories</strong>
-            <ol>
-              <li>Enter your name and write a short memory or note.</li>
-              <li>Select photos or videos to preview them on this page.</li>
-              <li>Click the folder button on the right to open John's memorial photo folder in Google Drive.</li>
-              <li>Upload your files there so the family can keep them permanently.</li>
-            </ol>
-          </div>
-          <div class="actions" style="margin-top:16px;">
-            <button class="btn" type="button">Preview contribution</button>
-            <button id="clearPreviewBtn" class="btn secondary" type="button">Clear form</button>
-          </div>
-          <div id="previewStatus" class="tip hidden"></div>
+          <div class="tip">Need help? If the folder does not open or uploading is blocked, contact Dan Schacher so he can confirm that your Google account has editor permission.</div>
         </section>
 
         <section class="card">
@@ -749,47 +694,11 @@
       </div>
 
       <div class="stack">
-        <section class="card">
-          <h3>Memorial details</h3>
-          <div class="muted" id="detailsBlock"></div>
-        </section>
-
-        <section class="card">
-          <h3>Family album</h3>
-          <p class="muted">Use the button below to open John's memorial photo folder in Google Drive, where family and friends can view and upload full-size photos and videos.</p>
-          <div class="actions" style="margin-top:14px;">
-            <a id="albumBtn" class="btn" target="_blank" rel="noreferrer">Open John's Memorial Photo Folder</a>
-          </div>
-          <div class="tip">Paste your Google Drive shared folder link into the <strong>GOOGLE_ALBUM_URL</strong> value in the code if you want to change it later. In Google Drive, give trusted family and friends editor access if you want them to upload their own photos and videos.</div>
-        </section>
-
-        <section class="card">
-          <h3>Privacy</h3>
-          <ul class="side-list muted">
-            <li>Use a strong family password.</li>
-            <li>Share the password only with trusted people.</li>
-            <li>Avoid posting sensitive personal or financial details.</li>
-            <li>Remember: a front-end password is basic privacy, not bank-level security.</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>At a glance</h3>
-          <div class="kpi-grid">
-            <div class="kpi"><div>📷</div><div id="photosCount" class="kpi-value">0</div><div class="tiny">Photos</div></div>
-            <div class="kpi"><div>🎬</div><div id="videosCount" class="kpi-value">0</div><div class="tiny">Videos</div></div>
-            <div class="kpi"><div>👥</div><div id="itemsCount" class="kpi-value">0</div><div class="tiny">Items</div></div>
-          </div>
-        </section>
-
-        <section class="card">
-          <h3>Family contact</h3>
-          <div class="muted">
-            <p>Questions, stories, or access requests can be directed to:</p>
-            <p><strong id="familyContact"></strong></p>
-            <p id="familyEmail"></p>
-          </div>
-        </section>
+        <section class="card"><h3>Memorial details</h3><div class="muted" id="detailsBlock"></div></section>
+        <section class="card"><h3>Family album</h3><p class="muted">Use the button below to open John's memorial photo folder in Google Drive, where family and friends can view and upload full-size photos and videos.</p><div class="actions" style="margin-top:14px;"><a id="albumBtn" class="btn" target="_blank" rel="noreferrer">Open Remembering John Photo &amp; Video Folders</a></div><div class="tip">Everyone with editor access can upload photos and videos directly inside the shared Google Drive folder.</div></section>
+        <section class="card"><h3>Privacy</h3><ul class="side-list muted"><li>Use a strong family password.</li><li>Share the password only with trusted people.</li><li>Avoid posting sensitive personal or financial details.</li><li>Remember: a front-end password is basic privacy, not bank-level security.</li></ul></section>
+        <section class="card"><h3>At a glance</h3><div class="kpi-grid"><div class="kpi"><div>📷</div><div id="photosCount" class="kpi-value">0</div><div class="tiny">Photos</div></div><div class="kpi"><div>🎬</div><div id="videosCount" class="kpi-value">0</div><div class="tiny">Videos</div></div><div class="kpi"><div>👥</div><div id="itemsCount" class="kpi-value">0</div><div class="tiny">Items</div></div></div></section>
+        <section class="card"><h3>Family contact</h3><div class="muted"><p>Questions, stories, or access requests can be directed to:</p><p><strong id="familyContact"></strong></p><p id="familyEmail"></p></div></section>
       </div>
     </main>
   </div>
@@ -803,40 +712,14 @@
       FAMILY_CONTACT: "Dan Schacher",
       FAMILY_EMAIL: "danschacher6@gmail.com",
       TRIBUTE_MESSAGE: "John Bielski was a father, a husband, a friend and so much more to all of us. I created John's memorial page for his birthday on March 10th so we can all celebrate John's life and impact on our lives by sharing our memories, viewing and adding photos and videos from the past and stay in touch with each other. In loving Memory, Dan Schacher",
-  MUSIC_URL: "./music/john-memorial-song.mp3",
-SLIDE_DURATION_MS: 7000,
-SLIDESHOW_IMAGES: [
-  "images/slide1.jpg",
-  "images/slide2.jpg",
-  "images/slide3.jpg",
-  "images/slide4.jpg",
-  "images/slide5.jpg",
-  "images/slide6.jpg",
-  "images/slide7.jpg",
-  "images/slide8.jpg",
-  "images/slide9.jpg",
-  "images/slide10.jpg",
-  "images/slide11.jpg",
-  "images/slide12.jpg",
-  "images/slide13.jpg",
-  "images/slide14.jpg",
-  "images/slide15.jpg",
-  "images/slide16.jpg",
-  "images/slide17.jpg",
-  "images/slide18.jpg",
-  "images/slide19.jpg",
-  "images/slide20.jpg",
-  "images/slide21.jpg",
-  "images/slide22.jpg",
-  "images/slide23.jpg",
-  "images/slide24.jpg"
-],
+      MUSIC_URL: "./music/john-memorial-song.mp3",
+      SLIDE_DURATION_MS: 7000,
+      SLIDESHOW_IMAGES: [
+        "images/slide1.jpg","images/slide2.jpg","images/slide3.jpg","images/slide4.jpg","images/slide5.jpg","images/slide6.jpg","images/slide7.jpg","images/slide8.jpg","images/slide9.jpg","images/slide10.jpg","images/slide11.jpg","images/slide12.jpg","images/slide13.jpg","images/slide14.jpg","images/slide15.jpg","images/slide16.jpg","images/slide17.jpg","images/slide18.jpg","images/slide19.jpg","images/slide20.jpg","images/slide21.jpg","images/slide22.jpg","images/slide23.jpg","images/slide24.jpg"
+      ],
       TIMELINE_ITEMS: [
         { year: "1972", title: "Born", description: "John Nicholas Bielski II was born on March 10, 1972." },
         { year: "2025", title: "Remembered", description: "Family and friends continue to celebrate John's life, love, humor, and lasting impact." }
-      ],
-      MEMORIES: [
-        { author: "Dan Schacher", text: "John was larger than life and left an unforgettable impact on everyone who knew him." }
       ]
     };
 
@@ -848,8 +731,7 @@ SLIDESHOW_IMAGES: [
       shuffledSlides: [],
       slideshowTimer: null,
       paused: false,
-      galleryItems: [],
-      memories: [...CONFIG.MEMORIES]
+      galleryItems: []
     };
 
     const accessScreen = document.getElementById('accessScreen');
@@ -866,25 +748,13 @@ SLIDESHOW_IMAGES: [
     const fullscreenCounter = document.getElementById('fullscreenCounter');
     const galleryGrid = document.getElementById('galleryGrid');
     const galleryEmpty = document.getElementById('galleryEmpty');
-    const previewStatus = document.getElementById('previewStatus');
-    const fileInput = document.getElementById('fileInput');
-    const visitorName = document.getElementById('visitorName');
-    const uploadMessage = document.getElementById('uploadMessage');
-    const clearPreviewBtn = document.getElementById('clearPreviewBtn');
-    const memoryAuthor = document.getElementById('memoryAuthor');
-    const memoryText = document.getElementById('memoryText');
-    const postMemoryBtn = document.getElementById('postMemoryBtn');
-    const memoryList = document.getElementById('memoryList');
     const timelineList = document.getElementById('timelineList');
     const photosCount = document.getElementById('photosCount');
     const videosCount = document.getElementById('videosCount');
     const itemsCount = document.getElementById('itemsCount');
 
     function shuffleArray(arr) {
-      return [...arr]
-        .map(item => ({ item, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ item }) => item);
+      return [...arr].map(item => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ item }) => item);
     }
 
     function setText(id, value) {
@@ -899,16 +769,11 @@ SLIDESHOW_IMAGES: [
       setText('familyContact', CONFIG.FAMILY_CONTACT);
       setText('familyEmail', CONFIG.FAMILY_EMAIL);
       document.getElementById('albumBtn').href = CONFIG.GOOGLE_ALBUM_URL;
-      document.getElementById('detailsBlock').innerHTML = `
-        <p><strong>Name:</strong> ${CONFIG.MEMORIAL_NAME}</p>
-        <p><strong>Dates:</strong> ${CONFIG.MEMORIAL_DATES}</p>
-        <p><strong>Tribute:</strong> ${CONFIG.TRIBUTE_MESSAGE}</p>
-        <p>Add an obituary link, service information, charity donation request, or family contact details here.</p>
-      `;
+      document.getElementById('albumBtnLarge').href = CONFIG.GOOGLE_ALBUM_URL;
+      document.getElementById('detailsBlock').innerHTML = `<p><strong>Name:</strong> ${CONFIG.MEMORIAL_NAME}</p><p><strong>Dates:</strong> ${CONFIG.MEMORIAL_DATES}</p><p><strong>Tribute:</strong> ${CONFIG.TRIBUTE_MESSAGE}</p><p>Add an obituary link, service information, charity donation request, or family contact details here.</p>`;
       audioSource.src = CONFIG.MUSIC_URL;
       memorialAudio.load();
       renderTimeline();
-      renderMemories();
     }
 
     function renderTimeline() {
@@ -916,25 +781,8 @@ SLIDESHOW_IMAGES: [
       CONFIG.TIMELINE_ITEMS.forEach(item => {
         const div = document.createElement('div');
         div.className = 'timeline-item';
-        div.innerHTML = `
-          <div class="timeline-year">${item.year}</div>
-          <h4 style="margin:6px 0 0;font-size:1.15rem;">${item.title}</h4>
-          <p class="muted" style="margin:8px 0 0;">${item.description}</p>
-        `;
+        div.innerHTML = `<div class="timeline-year">${item.year}</div><h4 style="margin:6px 0 0;font-size:1.15rem;">${item.title}</h4><p class="muted" style="margin:8px 0 0;">${item.description}</p>`;
         timelineList.appendChild(div);
-      });
-    }
-
-    function renderMemories() {
-      memoryList.innerHTML = '';
-      state.memories.forEach(memory => {
-        const div = document.createElement('div');
-        div.className = 'memory-item';
-        div.innerHTML = `
-          <div style="font-weight:700;">${memory.author}</div>
-          <div class="muted" style="margin-top:8px;">${memory.text}</div>
-        `;
-        memoryList.appendChild(div);
       });
     }
 
@@ -1012,9 +860,7 @@ SLIDESHOW_IMAGES: [
       }
     }
 
-    function restartSlideshow() {
-      startSlideshow();
-    }
+    function restartSlideshow() { startSlideshow(); }
 
     async function tryPlayAudio() {
       memorialAudio.volume = 0.02;
@@ -1046,9 +892,7 @@ SLIDESHOW_IMAGES: [
       state.isMuted = !state.isMuted;
       memorialAudio.muted = state.isMuted;
       muteBtn.textContent = state.isMuted ? 'Unmute Music' : 'Mute Music';
-      if (!state.isMuted && state.audioReady && memorialAudio.paused) {
-        tryPlayAudio();
-      }
+      if (!state.isMuted && state.audioReady && memorialAudio.paused) tryPlayAudio();
     }
 
     function handleAccess() {
@@ -1071,25 +915,12 @@ SLIDESHOW_IMAGES: [
         galleryGrid.classList.remove('hidden');
         galleryEmpty.classList.add('hidden');
       }
-
       galleryGrid.innerHTML = '';
       state.galleryItems.forEach(item => {
         const wrapper = document.createElement('div');
         wrapper.className = 'gallery-item';
-        const media = item.type.startsWith('video/')
-          ? `<video controls src="${item.url}"></video>`
-          : `<img src="${item.url}" alt="${item.name}">`;
-        wrapper.innerHTML = `
-          <div class="gallery-media">${media}</div>
-          <div class="gallery-body">
-            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
-              <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</div>
-              <div class="tiny">${item.size}</div>
-            </div>
-            <div class="tiny">Shared by ${item.sharedBy}</div>
-            <div class="tiny">${item.note}</div>
-          </div>
-        `;
+        const media = item.type.startsWith('video/') ? `<video controls src="${item.url}"></video>` : `<img src="${item.url}" alt="${item.name}">`;
+        wrapper.innerHTML = `<div class="gallery-media">${media}</div><div class="gallery-body"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</div><div class="tiny">${item.size}</div></div><div class="tiny">Shared by ${item.sharedBy}</div><div class="tiny">${item.note}</div></div>`;
         galleryGrid.appendChild(wrapper);
       });
       updateStats();
@@ -1101,49 +932,6 @@ SLIDESHOW_IMAGES: [
       photosCount.textContent = String(photos);
       videosCount.textContent = String(videos);
       itemsCount.textContent = String(state.galleryItems.length);
-    }
-
-    function bytesToMb(bytes) {
-      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    }
-
-    function handleFilePreview(event) {
-      const files = Array.from(event.target.files || []);
-      if (!files.length) {
-        previewStatus.classList.add('hidden');
-        return;
-      }
-      const name = visitorName.value.trim() || 'Family & Friends';
-      const note = uploadMessage.value.trim() || 'Shared in loving memory.';
-      const nextItems = files.map(file => ({
-        name: file.name,
-        type: file.type || 'application/octet-stream',
-        url: URL.createObjectURL(file),
-        size: bytesToMb(file.size),
-        sharedBy: name,
-        note
-      }));
-      state.galleryItems = [...nextItems, ...state.galleryItems];
-      previewStatus.textContent = `Ready in preview: ${files.map(f => f.name).join(', ')}`;
-      previewStatus.classList.remove('hidden');
-      renderGallery();
-    }
-
-    function clearPreviewForm() {
-      visitorName.value = '';
-      uploadMessage.value = '';
-      fileInput.value = '';
-      previewStatus.classList.add('hidden');
-    }
-
-    function addMemory() {
-      const author = memoryAuthor.value.trim();
-      const text = memoryText.value.trim();
-      if (!author || !text) return;
-      state.memories.unshift({ author, text });
-      memoryAuthor.value = '';
-      memoryText.value = '';
-      renderMemories();
     }
 
     function openFullscreen() {
@@ -1166,10 +954,7 @@ SLIDESHOW_IMAGES: [
     updateStats();
 
     enterBtn.addEventListener('click', handleAccess);
-    passwordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleAccess();
-    });
-
+    passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleAccess(); });
     muteBtn.addEventListener('click', toggleMute);
     document.getElementById('prevSlideBtn').addEventListener('click', goToPreviousSlide);
     document.getElementById('nextSlideBtn').addEventListener('click', goToNextSlide);
@@ -1178,20 +963,13 @@ SLIDESHOW_IMAGES: [
     document.getElementById('fullscreenPrev').addEventListener('click', goToPreviousSlide);
     document.getElementById('fullscreenNext').addEventListener('click', goToNextSlide);
 
-    heroSlideshow.addEventListener('mouseenter', () => {
-      state.paused = true;
-      stopSlideshow();
-    });
+    heroSlideshow.addEventListener('mouseenter', () => { state.paused = true; stopSlideshow(); });
     heroSlideshow.addEventListener('mouseleave', () => {
       if (!fullscreenGallery.classList.contains('open')) {
         state.paused = false;
         startSlideshow();
       }
     });
-
-    fileInput.addEventListener('change', handleFilePreview);
-    clearPreviewBtn.addEventListener('click', clearPreviewForm);
-    postMemoryBtn.addEventListener('click', addMemory);
 
     document.addEventListener('keydown', (e) => {
       if (!fullscreenGallery.classList.contains('open')) return;
@@ -1202,4 +980,3 @@ SLIDESHOW_IMAGES: [
   </script>
 </body>
 </html>
-
