@@ -340,6 +340,55 @@
     }
 
     .section { padding-top: 28px; }
+
+    .memorial-note {
+      padding-top: 28px;
+    }
+
+    .memorial-note-card {
+      padding: 28px;
+    }
+
+    .memorial-note-kicker {
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .memorial-note-title {
+      margin: 0 0 8px;
+      font-size: clamp(1.7rem, 2.2vw, 2.2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .memorial-note-subtitle {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .memorial-note-body {
+      display: grid;
+      gap: 16px;
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .memorial-note-body p {
+      margin: 0;
+    }
+
+    .memorial-note-signoff {
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+
     .card { padding: 24px; }
     .card h3 {
       margin: 0 0 16px;
@@ -665,6 +714,30 @@
         <div class="card">
           <h3>John's Life Timeline</h3>
           <div id="timelineList" class="timeline-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section memorial-note">
+      <div class="container">
+        <div class="card memorial-note-card">
+          <div class="memorial-note-kicker">Why this memorial exists</div>
+          <h2 class="memorial-note-title">Why this memorial exists</h2>
+          <div class="memorial-note-subtitle">A Note from Dan Schacher</div>
+
+          <div class="memorial-note-body">
+            <p>Many of the photos and videos here were recorded at John’s wake in October 2025, where friends honored him by sharing memories and raising shots of Machine Head’s Shotgun Blast Whiskey — a limited-edition collector’s case that I had gifted to John before what unknowingly was our final concert together.</p>
+
+            <p>The Shotgun Blast whiskey held special meaning to John &amp; me as it represented so many of the things he loved — whiskey, metal music, hunting with shotguns with his family &amp; friends, and the iconic glowing briefcase from Pulp Fiction, one of our favorite movies growing up.</p>
+
+            <p>Our final concert together after nearly 40 years of shows was Machine Head in Chicago in 2025, where we even spent time backstage with the band before &amp; after the show. Those memories — along with the photos &amp; videos you see here — are some of my favorites from our lifelong friendship.</p>
+
+            <p>I created this memorial site not only to honor John today, but also as a future gift for his son, Johnny (JB3). When Johnny is older, this collection of stories, photos, and videos will help him see the many sides of his father through the memories of the people who knew and loved him.</p>
+
+            <p>Until that day, we can all continue to gather, share &amp; preserve these memories so Johnny can one day experience the incredible life, friendships, and impact of his dad, the legendary "Polish Prince" John Nicholas Bielski II.</p>
+
+            <p class="memorial-note-signoff">— Dan Schacher</p>
+          </div>
         </div>
       </div>
     </section>
